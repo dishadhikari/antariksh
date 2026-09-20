@@ -1,0 +1,26 @@
+{
+  "dataset": {
+    "id": "box_experiment_v1",
+    "version": "1.0",
+    "description": "Custom BAS experiment dataset"
+  },
+  "recordings": [
+    {
+      "recording_id": "REC_000001",
+      "participant_id": "P001",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\REC_000001.mp4",
+        "fps": 30,
+        "width": 1280,
+        "height": 720,
+        "frame_count": 344
+      },
+      "execution": {
+        "type": "correct",
+        "orientation": "normal"
+      },
+      "created_at": "2026-09-19T21:32:17.745324",
+      "events": []
+    }
+  ]
+}

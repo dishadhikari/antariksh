@@ -1,0 +1,19 @@
+experiment:
+  id: box_experiment
+  name: Box Handling Experiment
+  version: "1.0"
+
+sequence:
+  - START
+  - OPEN_BOX
+  - PICK_RED
+  - PICK_YELLOW
+  - PLACE_RED
+  - PLACE_YELLOW
+  - CLOSE_BOX
+  - COMPLETE
+
+settings:
+  confidence_threshold: 0.60
+  temporal_window: 5
+  minimum_votes: 3

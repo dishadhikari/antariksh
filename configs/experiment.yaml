@@ -1,0 +1,21 @@
+experiment:
+  id: "box_experiment_v1"
+  name: "Box Manipulation Experiment"
+  version: "1.0"
+
+camera:
+  source: 0
+  width: 1280
+  height: 720
+  fps: 30
+
+inference:
+  device: "cuda"
+  confidence_threshold: 0.5
+
+logging:
+  database: "data/experiment.db"
+  video_directory: "data/recordings"
+
+system:
+  offline: true
