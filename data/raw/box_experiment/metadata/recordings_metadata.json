@@ -1,0 +1,68 @@
+{
+    "participant_id": "participant_01",
+    "recordings": {
+      "1": {
+        "type": "correct"
+      },
+      "2": {
+        "type": "correct"
+      },
+      "3": {
+        "type": "correct"
+      },
+      "4": {
+        "type": "correct"
+      },
+      "5": {
+        "type": "correct"
+      },
+      "6": {
+        "type": "correct"
+      },
+      "7": {
+        "type": "correct"
+      },
+      "8": {
+        "type": "correct"
+      },
+      "9": {
+        "type": "correct"
+      },
+      "10": {
+        "type": "skip_order"
+      },
+      "11": {
+        "type": "skip_order"
+      },
+      "12": {
+        "type": "incorrect_box"
+      },
+      "13": {
+        "type": "incorrect_hand"
+      },
+      "14": {
+        "type": "incorrect_hand"
+      },
+      "15": {
+        "type": "incorrect_hand"
+      },
+      "16": {
+        "type": "incorrect_box"
+      },
+      "17": {
+        "type": "incorrect_order"
+      },
+      "18": {
+        "type": "incorrect_order"
+      },
+      "19": {
+        "type": "incorrect_order"
+      },
+      "20": {
+        "type": "incomplete"
+      },
+      "21": {
+        "type": "incomplete"
+      }
+    }
+  }

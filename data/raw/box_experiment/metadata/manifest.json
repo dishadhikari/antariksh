@@ -9,7 +9,7 @@
       "recording_id": "REC_000001",
       "participant_id": "P001",
       "video": {
-        "path": "data\\raw\\box_experiment\\videos\\REC_000001.mp4",
+        "path": "data\\raw\\box_experiment\\videos\\1.mp4",
         "fps": 30,
         "width": 1280,
         "height": 720,
@@ -20,6 +20,166 @@
         "orientation": "normal"
       },
       "created_at": "2026-09-19T21:32:17.745324",
+      "events": []
+    },
+    {
+      "recording_id": "REC_000002",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\2.mp4",
+        "fps": 15.02493340277304,
+        "frame_count": 301,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "correct",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000003",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\3.mp4",
+        "fps": 15.034718727986315,
+        "frame_count": 249,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "correct",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000004",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\4.mp4",
+        "fps": 15.037593984962406,
+        "frame_count": 231,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "correct",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000005",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\5.mp4",
+        "fps": 15.029524401690278,
+        "frame_count": 253,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "correct",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000006",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\6.mp4",
+        "fps": 15.024583023975024,
+        "frame_count": 257,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "skip_order",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000007",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\7.mp4",
+        "fps": 14.438358624405137,
+        "frame_count": 268,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "skip_order",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000008",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\8.mp4",
+        "fps": 15.028345542830785,
+        "frame_count": 202,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "skip_order",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000009",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\9.mp4",
+        "fps": 14.491621143559398,
+        "frame_count": 272,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "skip_order",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000010",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\10.mp4",
+        "fps": 15.034528450933925,
+        "frame_count": 236,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "skip_order",
+        "orientation": "normal"
+      },
+      "events": []
+    },
+    {
+      "recording_id": "REC_000011",
+      "participant_id": "participant_01",
+      "video": {
+        "path": "data\\raw\\box_experiment\\videos\\11.mp4",
+        "fps": 15.030425963488844,
+        "frame_count": 247,
+        "width": 1280,
+        "height": 720
+      },
+      "execution": {
+        "type": "incomplete",
+        "orientation": "normal"
+      },
       "events": []
     }
   ]

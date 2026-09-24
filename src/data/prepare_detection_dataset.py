@@ -98,20 +98,32 @@ class DetectionDatasetPreparer:
             for recording_id in recording_ids:
 
                 if recording_id not in recordings:
-
                     raise ValueError(
                         f"Recording {recording_id} "
                         "not found in manifest"
                     )
 
-                pattern = (
-                    f"{recording_id}_*.jpg"
+                recording = recordings[
+                    recording_id
+                ]
+
+                video_path = Path(
+                    recording["video"]["path"]
                 )
 
+                video_name = video_path.stem
+
+                pattern = f"{video_name}_*.jpg"
+
                 frames = sorted(
-                    self.frames_dir.glob(
-                        pattern
-                    )
+                    self.frames_dir.glob(pattern)
+                )
+
+                print(
+                    f"{recording_id} "
+                    f"({video_name}.mp4) -> "
+                    f"{split}: "
+                    f"{len(frames)} frames"
                 )
 
                 for frame in frames:
@@ -130,6 +142,7 @@ class DetectionDatasetPreparer:
 
                     copied[split] += 1
 
+        print()
         print(
             f"Train images: {copied['train']}"
         )
@@ -149,8 +162,5 @@ class DetectionDatasetPreparer:
 
 if __name__ == "__main__":
 
-    preparer = (
-        DetectionDatasetPreparer()
-    )
-
+    preparer = DetectionDatasetPreparer()
     preparer.prepare()

@@ -1,0 +1,42 @@
+{
+  "seed": 42,
+  "method": "recording_based_balanced_split",
+  "execution_types": {
+    "correct": [
+      "REC_000004",
+      "REC_000002",
+      "REC_000003",
+      "REC_000005",
+      "REC_000001"
+    ],
+    "skip_order": [
+      "REC_000009",
+      "REC_000008",
+      "REC_000006",
+      "REC_000010",
+      "REC_000007"
+    ],
+    "incomplete": [
+      "REC_000011"
+    ]
+  },
+  "recordings": {
+    "train": [
+      "REC_000009",
+      "REC_000002",
+      "REC_000003",
+      "REC_000004",
+      "REC_000008",
+      "REC_000006"
+    ],
+    "val": [
+      "REC_000010",
+      "REC_000005"
+    ],
+    "test": [
+      "REC_000007",
+      "REC_000011",
+      "REC_000001"
+    ]
+  }
+}

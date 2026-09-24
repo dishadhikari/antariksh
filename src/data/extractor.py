@@ -95,3 +95,11 @@ class FrameExtractor:
         print(
             f"Total frames extracted: {total}"
         )
+if __name__ == "__main__":
+    extractor = FrameExtractor(
+        input_dir="data/raw/box_experiment/videos",
+        output_dir="data/detection/images/raw",
+        frame_interval=5,
+    )
+
+    extractor.extract_all()

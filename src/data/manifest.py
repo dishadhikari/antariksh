@@ -72,3 +72,29 @@ class DatasetManifest:
                 file,
                 indent=2
             )
+    def add_recordings(self, recordings: list[dict]):
+        data = self.load()
+
+        if "recordings" not in data:
+            data["recordings"] = []
+
+        existing_ids = {
+            item["recording_id"]
+            for item in data["recordings"]
+        }
+
+        for recording in recordings:
+            recording_id = recording.get("recording_id")
+
+            if not recording_id:
+                raise ValueError(
+                    "Recording must contain 'recording_id'"
+                )
+
+            if recording_id in existing_ids:
+                continue
+
+            data["recordings"].append(recording)
+            existing_ids.add(recording_id)
+
+        self._save(data)

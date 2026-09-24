@@ -1,53 +1,43 @@
 events:
 
   - id: 0
-    name: START
-    description: Experiment has started
+    name: LEFT_HAND_UP
+    description: Astronaut raises the left hand
 
   - id: 1
-    name: OPEN_BOX
-    description: Astronaut opens the experiment box
+    name: RIGHT_HAND_UP
+    description: Astronaut raises the right hand
 
   - id: 2
-    name: PICK_RED
-    description: Astronaut picks up the red box
+    name: PICK_BLUE_BOX
+    description: Astronaut picks up the blue box
 
   - id: 3
-    name: PICK_YELLOW
-    description: Astronaut picks up the yellow box
+    name: PUT_DOWN_BLUE_BOX
+    description: Astronaut puts down the blue box
 
   - id: 4
-    name: PLACE_RED
-    description: Astronaut places the red box
+    name: PICK_BLACK_BOX
+    description: Astronaut picks up the black box
 
   - id: 5
-    name: PLACE_YELLOW
-    description: Astronaut places the yellow box
+    name: PUT_DOWN_BLACK_BOX
+    description: Astronaut puts down the black box
 
-  - id: 6
-    name: CLOSE_BOX
-    description: Astronaut closes the experiment box
 
-  - id: 7
-    name: COMPLETE
-    description: Experiment completed
-    
 experiment:
-  id: "box_experiment_v1"
-  name: "BAS Box Manipulation Experiment"
+  id: "box_experiment"
+  name: "Box Handling Experiment"
   version: "1.0"
 
 sequence:
-  - START
-  - OPEN_BOX
-  - PICK_RED
-  - PICK_YELLOW
-  - PLACE_RED
-  - PLACE_YELLOW
-  - CLOSE_BOX
-  - COMPLETE
+  - LEFT_HAND_UP
+  - RIGHT_HAND_UP
+  - PICK_BLUE_BOX
+  - PUT_DOWN_BLUE_BOX
+  - PICK_BLACK_BOX
+  - PUT_DOWN_BLACK_BOX
 
 objects:
-  - experiment_box
-  - red_box
-  - yellow_box
+  - blue_box
+  - black_box

@@ -5,6 +5,5 @@ val: images/val
 test: images/test
 
 names:
-  0: red_box
-  1: yellow_box
-  2: experiment_box
+  0: blue_box
+  1: black_box

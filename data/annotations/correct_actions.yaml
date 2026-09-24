@@ -1,0 +1,101 @@
+recordings:
+
+  "1":
+    - name: LEFT_HAND_UP
+      start: 50
+      end: 60
+    - name: RIGHT_HAND_UP
+      start: 60
+      end: 90
+    - name: PICK_BLUE_BOX
+      start: 94
+      end: 99
+    - name: PUT_DOWN_BLUE_BOX
+      start: 115
+      end: 123
+    - name: PICK_BLACK_BOX
+      start: 164
+      end: 170
+    - name: PUT_DOWN_BLACK_BOX
+      start: 178
+      end: 186
+
+  "2":
+    - name: LEFT_HAND_UP
+      start: 40
+      end: 50
+    - name: RIGHT_HAND_UP
+      start: 50
+      end: 80
+    - name: PICK_BLUE_BOX
+      start: 88
+      end: 96
+    - name: PUT_DOWN_BLUE_BOX
+      start: 116
+      end: 124
+    - name: PICK_BLACK_BOX
+      start: 164
+      end: 172
+    - name: PUT_DOWN_BLACK_BOX
+      start: 194
+      end: 202
+
+  "3":
+    - name: LEFT_HAND_UP
+      start: 35
+      end: 45
+    - name: RIGHT_HAND_UP
+      start: 50
+      end: 75
+    - name: PICK_BLUE_BOX
+      start: 88
+      end: 98
+    - name: PUT_DOWN_BLUE_BOX
+      start: 118
+      end: 128
+    - name: PICK_BLACK_BOX
+      start: 155
+      end: 168
+    - name: PUT_DOWN_BLACK_BOX
+      start: 188
+      end: 198
+
+  "4":
+    - name: LEFT_HAND_UP
+      start: 35
+      end: 45
+    - name: RIGHT_HAND_UP
+      start: 50
+      end: 75
+    - name: PICK_BLUE_BOX
+      start: 88
+      end: 98
+    - name: PUT_DOWN_BLUE_BOX
+      start: 118
+      end: 128
+    - name: PICK_BLACK_BOX
+      start: 155
+      end: 168
+    - name: PUT_DOWN_BLACK_BOX
+      start: 188
+      end: 198
+
+  "5":
+    - name: LEFT_HAND_UP
+      start: 40
+      end: 50
+    - name: RIGHT_HAND_UP
+      start: 55
+      end: 80
+    - name: PICK_BLUE_BOX
+      start: 88
+      end: 100
+    - name: PUT_DOWN_BLUE_BOX
+      start: 120
+      end: 140
+    - name: PICK_BLACK_BOX
+      start: 160
+      end: 175
+    - name: PUT_DOWN_BLACK_BOX
+      start: 195
+      end: 205

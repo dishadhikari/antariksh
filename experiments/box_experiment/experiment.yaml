@@ -4,14 +4,12 @@ experiment:
   version: "1.0"
 
 sequence:
-  - START
-  - OPEN_BOX
-  - PICK_RED
-  - PICK_YELLOW
-  - PLACE_RED
-  - PLACE_YELLOW
-  - CLOSE_BOX
-  - COMPLETE
+  - LEFT_HAND_UP
+  - RIGHT_HAND_UP
+  - PICK_BLUE_BOX
+  - PUT_DOWN_BLUE_BOX
+  - PICK_BLACK_BOX
+  - PUT_DOWN_BLACK_BOX
 
 settings:
   confidence_threshold: 0.60
