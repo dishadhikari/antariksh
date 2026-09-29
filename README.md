@@ -59,8 +59,10 @@ The proposed system addresses the need for an onboard AI assistant capable of:
 - The system processes a live camera stream and extracts:
 - Rack-relative spatial relationships
 - Temporal motion patterns
-  
-## 4. Temporal Activity Recognition
+
+# Key Features
+
+### 1. Temporal Activity Recognition
 
 The system analyzes multiple consecutive frames to understand actions over time rather than making decisions from a single frame.
 
