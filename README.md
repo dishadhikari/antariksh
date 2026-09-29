@@ -1,8 +1,7 @@
 # VYOMA- Vision Based AI for On-Board Mission Operations
 
-**VYOMA** is an **offline, edge-AI based onboard experiment monitoring and verification system** designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations and providing real-time guidance.<br>
-It converts live camera feeds into structured experiment states by combining **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline.<br>
-The complete inference and decision pipeline is designed to operate **offline on edge hardware**, reducing dependence on continuous communication with ground control.<br>
+**VYOMA** is an **offline, edge-AI based onboard experiment monitoring and verification system** designed to assist astronauts during scientific experiments by combining **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline, thus providing real-time guidance.<br><br>
+The complete inference and decision pipeline is designed to operate **offline on edge hardware**, reducing dependence on continuous communication with ground control.<br><br>
 Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH 2026 problem statement.
 
 ---
