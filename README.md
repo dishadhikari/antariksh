@@ -150,36 +150,6 @@ Provides complete onboard monitoring through structured event logs, local H.264/
 | Network Streaming | RTSP |
 | Operating System | Ubuntu / JetPack |
 
----
-
-# Methodology
-
-The implementation follows the pipeline:
-
-```text
-1. Capture
-      ↓
-2. Detect
-      ↓
-3. Track
-      ↓
-4. Estimate Pose / Hands / 3D Body
-      ↓
-5. Extract Spatial + Temporal Features
-      ↓
-6. Recognize Activity
-      ↓
-7. Verify Physical Outcome
-      ↓
-8. Validate Experiment Sequence
-      ↓
-9. Guide / Alert
-      ↓
-10. Log + Store + Transmit Events
-```
-
----
-
 # System Modules
 
 | Module | Description |
@@ -203,32 +173,11 @@ The implementation follows the pipeline:
 | Logger | Stores timestamped experiment records |
 | GUI | Displays experiment, AI and system status |
 
----
-
-# 
-
-## Communication Loss
-
-```text
-LINK AVAILABLE
-      ↓
-Transmit Events
-
-LINK LOST
-      ↓
-Store Events Locally
-      ↓
-Continue Experiment
-
-LINK RESTORED
-      ↓
-Synchronize Stored Events
-```
 # Dataset Generation and Experiment Workflow
 
 We have trained the AI model based on our own recorded videos (synthetic dataset generation). VYOMA uses a combination of **real and synthetic data**. Synthetic data is primarily used to test for the specific experiment, while real data is used for realistic validation.
 
-Record experiment videos using:
+Recorded experiment videos using:
 
 - Different body orientations
 - Different execution speeds
@@ -265,89 +214,8 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-
-## 4. Install NVIDIA / Edge Dependencies
-For Jetson deployment, install the required:
-- JetPack
-- CUDA
-- TensorRT
-- NVIDIA DeepStream
-- GStreamer
-
-according to the target hardware environment.
-
-# Usage Guide
-
-## Step 1 — Start Camera
-
-```bash
-python app.py --camera 0
-```
-
----
-## Step 2 — Start Experiment
-
-Select the required experiment from the GUI.
-
-The system initializes:
-
-- Camera
-- Object detector
-- Pose model
-- Hand tracking
-- 3D HMR
-- Experiment state
-- Logger
-- Video recorder
-
----
-
-## Step 3 — Perform Experiment
-
-The system continuously:
-
-- Detects objects
-- Tracks the astronaut
-- Recognizes actions
-- Verifies physical outcomes
-- Validates experiment sequence
-
----
-
-## Step 4 — Receive Guidance
-
-The GUI displays:
-
-```text
-CURRENT STEP
-NEXT STEP
-CONFIDENCE
-SYSTEM STATUS
-EXPERIMENT STATUS
-```
-
-Voice alerts are generated for confirmed deviations.
-
----
-
-## Step 5 — Complete Experiment
-
-At completion, VYOMA generates:
-
-```text
-Experiment Video
-Experiment Event Log
-Experiment Summary
-Telemetry Record
-```
-
----
-
 # Output & Logging
-
-## Experiment Event Log
-
-VYOMA stores lightweight event records using JSONL.
+Experiment Event Log stores lightweight event records using JSONL.
 
 Example:
 
@@ -361,8 +229,6 @@ Example:
   "status": "COMPLETED"
 }
 ```
-
----
 
 ## Deviation Event
 
@@ -380,19 +246,15 @@ Example:
 # Testing & Evaluation
 
 ## Activity Recognition Metrics
-- Accuracy
-- Precision
-- Recall
-- F1-score
+- Accuracy- 0.91
+- Precision- 0.7
+- Recall-0.88
+- F1-score- 0.77
 - Confusion matrix
 
 ## Experiment Validation Metrics
 - Correct step verification rate
 - False step completion rate
-- Wrong-sequence detection rate
-- Skipped-step detection rate
-- Repeated-step detection rate
-- Unknown-action rejection rate
 - Recovery success rate
 
 ## Edge Metrics
@@ -465,12 +327,12 @@ Synchronize Events
 # Team
 | Name | Role |
 |---|---|
-| Disha Adhikari | AI  |
-| Akshat Porwal | Backend / Edge AI |
+| Disha Adhikari | AI and Computer Vision  |
+| Akshat Porwal | Backend and Edge AI |
 | Priya Singh | Experiment Pipeline Validation |
-| Mishita Joshi | AI Dataset Training |
-| Mansi Rai | GUI |
-| Geeriwar Aggarwal | UI |
+| Mishita Joshi | AI Dataset and Model Training |
+| Mansi Rai | GUI and Frontend Development |
+| Geeriwar Aggarwal | UI/UX & System Visualization |
 
 # License
 This project is developed as part of the **Smart India Hackathon 2026** problem statement ID 26174.
