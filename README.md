@@ -24,53 +24,18 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH
 14. Team
 15. License
     
-# Key Features
+#Key Features
 
 ## Key Features
 
-### 1. Temporal Activity & Interaction Recognition
-Recognizes astronaut activities from sequences of video frames using object detection, pose estimation, hand landmarks, tracking, and hand–object interaction analysis.
+### 1. Edge-Native Offline AI Experiment Evaluation
+ASTRA performs the complete perception, activity recognition, state validation, and decision pipeline **on-device**, without requiring cloud or continuous ground connectivity. This enables low-latency, autonomous experiment monitoring even during communication outages.
 
-### 2. Physical Outcome Verification
-Verifies whether the intended physical change actually occurred. An action is considered complete only when the corresponding change in the experiment state is confirmed.
-
-```text
-Before: Red Box → Inside Container
-Action: Grasp → Move → Release
-After:  Red Box → Outside Container
-                    ↓
-              STEP VERIFIED
-```
-
-### 3. State-Aware Experiment Validation
-Uses a deterministic Finite State Machine (FSM) to compare observed actions and physical outcomes with the predefined experiment sequence.
+### 2. Runtime AI Experiment Evaluator
+Continuously evaluates the experiment **while it is being performed**, combining temporal activity recognition, object state, hand–object interaction, physical outcome verification, and a deterministic experiment state machine to detect:
 
 ```text
-CORRECT | SKIPPED | REPEATED | OUT-OF-SEQUENCE
-UNKNOWN | UNCERTAIN
-```
-
-The experiment state advances only when sufficient evidence confirms the current step.
-
-### 4. Confidence-Aware Guidance & Deviation Prevention
-Combines perception confidence, temporal evidence, and experiment state to decide whether to advance, continue observing, or issue an alert.
-
-```text
-High Confidence   → Verify & Advance
-Medium Confidence → Continue Observing
-Low Confidence    → Uncertain / No State Change
-```
-
-Potentially incorrect actions can trigger an early local voice warning.
-
-### 5. Microgravity-Aware Spatial Understanding
-Uses the payload rack as the primary spatial reference instead of assuming a fixed gravitational up/down direction. This enables reliable interpretation of astronaut and object positions under arbitrary orientations.
-
-### 6. Fault-Tolerant Perception
-Handles occlusion, motion blur, poor visibility, and temporary tracking loss. When one perception signal becomes unreliable, ASTRA uses complementary evidence from other modules and avoids unreliable state transitions.
-
-### 7. Event-Based & Delay-Tolerant Telemetry
-Converts experiment activity into compact, timestamped events instead of relying on continuous raw-video transmission.
+CORRECT → SKIPPED → REPEATED → OUT-OF-SEQUENCE → UNCERTAIN
 
 ```text
 STEP_COMPLETED
