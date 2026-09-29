@@ -1,6 +1,6 @@
 # ASTRA — Autonomous Experiment Verification & Guidance System
 
-**ASTRA (Autonomous Step Tracking, Reasoning & Assistance)** is an offline, edge-AI based system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations, and providing real-time guidance.
+**ASTRA (Autonomous Step Tracking, Reasoning & Assistance)** is an offline, edge-AI based onboard experiment monitoring and verification system system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations, and providing real-time guidance.
 
 Built for the **AI Human Activity Recognition for On-board BAS Experiments** problem statement.
 
@@ -8,8 +8,7 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** pro
 
 ## Table of Contents
 
-1. Overview
-2. Problem Statement
+2. Overview
 3. Proposed Solution
 4. Key Features
 6. System Architecture
@@ -32,29 +31,18 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** pro
 
 # Overview
 
-ASTRA is an **onboard experiment monitoring and verification system** that converts live camera feeds into structured experiment states.
-
-Instead of only recognizing human activities, ASTRA understands:
+ASTRA is an **onboard experiment monitoring and verification system** that converts live camera feeds into structured experiment states. It combines **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline. Instead of only recognizing human activities, ASTRA understands:
 
 - What the astronaut is doing
 - Which experiment object is being interacted with
-- Whether the physical action actually occurred
 - Whether the action is valid at the current stage
-- What the next expected step is
 - Whether the astronaut has skipped, repeated or performed an incorrect action
-- When the visual evidence is insufficient to make a reliable decision
 
 The complete inference and decision pipeline is designed to operate **offline on edge hardware**, reducing dependence on continuous communication with ground control.
 
 ### Core Concept
 
 > **SEE → UNDERSTAND → VERIFY → GUIDE**
-
----
-
-# Problem Statement
-
-Future space missions require astronauts to conduct increasingly complex scientific experiments while communication with Earth may be delayed, intermittent or bandwidth constrained.
 
 The proposed system addresses the need for an onboard AI assistant capable of:
 
@@ -68,60 +56,10 @@ The proposed system addresses the need for an onboard AI assistant capable of:
 - Recording experiment video locally
 - Streaming video to a specified IP
 - Operating as a standalone offline system
-
----
-
-# Proposed Solution
-
-ASTRA combines **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline.
-
-The system processes a live camera stream and extracts:
-
-- Experiment objects
-- Astronaut body pose
-- Hand landmarks
-- Hand–object interactions
-- Object movement
+- The system processes a live camera stream and extracts:
 - Rack-relative spatial relationships
 - Temporal motion patterns
-
-These signals are fused to infer an action such as:
-
-```text
-REMOVE_RED_BOX
-PLACE_YELLOW_BOX
-OPEN_CONTAINER
-PICK_TOOL
-PLACE_TOOL
-# Temporal Activity Recognition vs Physical Outcome Verification
-
-They are **not the same thing**.
-
-### Temporal Activity Recognition
-Answers:
-
-> **“What action is the astronaut performing?”**
-
-It looks at a sequence of frames and identifies the action from motion over time.
-
-Example:
-
-```text
-Hand approaches red box
-        ↓
-Hand contacts red box
-        ↓
-Box moves
-        ↓
-Box changes location
-        ↓
-Interaction confirmed
-```
-
-This provides evidence that the astronaut is actually manipulating the required experiment object.
-
----
-
+  
 ## 4. Temporal Activity Recognition
 
 The system analyzes multiple consecutive frames to understand actions over time rather than making decisions from a single frame.
