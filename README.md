@@ -8,21 +8,21 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH
 
 ## Table of Contents
 
-4. Key Features
-6. System Architecture
-7. Tech Stack
-8. Methodology
-9. System Modules
-12. Dataset Generation and Experiment Workflow
-13. Training Strategy
-14. Installation & Setup
-16. Usage Guide
-17. Project Structure
-18. Output & Logging
-19. Testing & Evaluation
-20. Hardware Deployment
-23. Team
-24. License
+1. Key Features
+2. System Architecture
+3. Tech Stack
+4. Methodology
+5. System Modules
+6. Dataset Generation and Experiment Workflow
+7. Training Strategy
+8. Installation & Setup
+9. Usage Guide
+10. Project Structure
+11. Output & Logging
+12. Testing & Evaluation
+13. Hardware Deployment
+14. Team
+15. License
 
 ---
 
