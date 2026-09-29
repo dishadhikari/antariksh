@@ -1,14 +1,14 @@
-# ASTRA — Autonomous Experiment Verification & Guidance System
+# VYOMA- Vision Based AI for On-Board Mission Operations
 
-**ASTRA** is an offline, edge-AI based onboard experiment monitoring and verification system system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations, and providing real-time guidance.
-
-Built for the **AI Human Activity Recognition for On-board BAS Experiments** problem statement.
+**VYOMA** is an offline, edge-AI based onboard experiment monitoring and verification system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations and providing real-time guidance.
+It converts live camera feeds into structured experiment states by combining **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline.
+The complete inference and decision pipeline is designed to operate **offline on edge hardware**, reducing dependence on continuous communication with ground control.
+Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH 2026 problem statement.
 
 ---
 
 ## Table of Contents
 
-2. Overview
 4. Key Features
 6. System Architecture
 7. Tech Stack
@@ -29,34 +29,8 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** pro
 
 # Overview
 
-ASTRA is an **onboard experiment monitoring and verification system** that converts live camera feeds into structured experiment states. It combines **computer vision, pose estimation, temporal action recognition and deterministic experiment validation** into one edge-AI pipeline. Instead of only recognizing human activities, ASTRA understands:
+ Instead of only recognizing human activities, VYOMA understands:
 
-- What the astronaut is doing
-- Which experiment object is being interacted with
-- Whether the action is valid at the current stage
-- Whether the astronaut has skipped, repeated or performed an incorrect action
-
-The complete inference and decision pipeline is designed to operate **offline on edge hardware**, reducing dependence on continuous communication with ground control.
-
-### Core Concept
-
-> **SEE → UNDERSTAND → VERIFY → GUIDE**
-
-The proposed system addresses the need for an onboard AI assistant capable of:
-
-- Monitoring experiments through fixed cameras
-- Recognizing astronaut activities
-- Validating the predefined sequence of an experiment
-- Detecting skipped or out-of-sequence actions
-- Suggesting the next step
-- Providing voice-based alerts
-- Generating timestamped experiment logs
-- Recording experiment video locally
-- Streaming video to a specified IP
-- Operating as a standalone offline system
-- The system processes a live camera stream and extracts:
-- Rack-relative spatial relationships
-- Temporal motion patterns
 
 # Key Features
 
@@ -245,7 +219,7 @@ Synchronize Stored Events
 ```
 # Dataset Generation and Experiment Workflow
 
-We have trained the AI model based on our own recorded videos (synthetic dataset generation). ASTRA uses a combination of **real and synthetic data**. Synthetic data is primarily used to test for the specific experiment, while real data is used for realistic validation.
+We have trained the AI model based on our own recorded videos (synthetic dataset generation). VYOMA uses a combination of **real and synthetic data**. Synthetic data is primarily used to test for the specific experiment, while real data is used for realistic validation.
 
 Record experiment videos using:
 
@@ -261,8 +235,8 @@ Record experiment videos using:
 
 ## 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/astra.git
-cd astra
+git clone https://github.com/yourusername/VYOMA.git
+cd VYOMA
 ```
 
 ## 2. Create Virtual Environment
@@ -351,7 +325,7 @@ Voice alerts are generated for confirmed deviations.
 
 ## Step 5 — Complete Experiment
 
-At completion, ASTRA generates:
+At completion, VYOMA generates:
 
 ```text
 Experiment Video
@@ -366,7 +340,7 @@ Telemetry Record
 
 ## Experiment Event Log
 
-ASTRA stores lightweight event records using JSONL.
+VYOMA stores lightweight event records using JSONL.
 
 Example:
 
