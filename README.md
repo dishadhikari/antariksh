@@ -1034,8 +1034,6 @@ Communication Restored
 Synchronize Events
 ```
 
----
-
 # Future Improvements
 
 - Multi-camera perception
@@ -1044,17 +1042,10 @@ Synchronize Events
 - Hardware-aware adaptive inference
 - Advanced uncertainty estimation
 - Additional experiment templates
-- More sophisticated anomaly detection
-- Autonomous experiment recovery
-- Ground-control dashboard
-- DTN-compatible communication layer
 - Radiation-tolerant deployment hardware
 - Integration with spacecraft payload interfaces
 
----
-
 # Team
-
 | Name | Role |
 |---|---|
 | Disha Adhikari | AI  |
@@ -1064,8 +1055,5 @@ Synchronize Events
 | Mansi Rai | GUI |
 | Geeriwar Aggarwal | UI |
 
----
-
 # License
-
-This project is developed as part of the **Smart India Hackathon 2026** problem statement ID 2
+This project is developed as part of the **Smart India Hackathon 2026** problem statement ID 26174.
