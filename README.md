@@ -429,46 +429,6 @@ Example:
 }
 ```
 
----
-
-# Innovation & Uniqueness
-
-## Microgravity-Aware Spatial Understanding
-
-Uses the payload rack as the spatial reference instead of assuming a fixed Earth-based up/down orientation.
-
----
-
-## Orientation-Agnostic 3D Human Mesh Recovery
-
-Uses 3D human pose information to support astronaut activity recognition across arbitrary body orientations.
-
----
-
-## Event-Based Lightweight Telemetry
-
-Converts continuous experiment activity into compact mission-relevant events instead of relying entirely on raw-video communication.
-
----
-
-## Delay/Disruption-Tolerant Experiment Reporting
-
-Allows experiment monitoring to continue during communication loss and synchronizes stored information when connectivity returns.
-
----
-
-## Graceful Degradation / Fault-Tolerant Perception
-
-Prevents temporary failures in individual perception components from immediately failing the complete experiment-monitoring system.
-
----
-
-## Uncertainty-Driven Operation
-
-The system explicitly represents uncertain observations and avoids advancing the experiment state until sufficient evidence is available.
-
----
-
 # System Architecture
 
 ```text
@@ -505,7 +465,7 @@ The system explicitly represents uncertain observations and avoids advancing the
               ┌────────────────────┐
               │ TEMPORAL REASONING │
               │                    │
-              │ TCN / Transformer  │
+              │ TCN   
               └─────────┬──────────┘
                         │
                         ▼
@@ -551,26 +511,24 @@ The system explicitly represents uncertain observations and avoids advancing the
 
 | Layer | Technology |
 |---|---|
-| Programming | Python + C++ where required |
+| Primary Programming Language | Python |
 | AI Training | PyTorch + Ultralytics |
 | Object Detection | YOLO26 |
 | Pose Estimation | YOLO26-Pose |
-| Segmentation | YOLO26-Seg where required |
+| Segmentation | YOLO26-Seg  |
 | 3D Human Understanding | 3D Human Mesh Recovery |
-| Hand Interaction | Hand landmarks + geometry |
-| Tracking | NVIDIA DeepStream Tracker / equivalent |
+| Tracking | NVIDIA DeepStream Tracker  |
 | Temporal Model | TCN / lightweight Transformer |
 | Spatial Reasoning | Rack-centric coordinate system |
 | Video Pipeline | GStreamer + NVIDIA DeepStream |
 | Inference Optimization | ONNX + TensorRT FP16 |
 | Edge Hardware | NVIDIA Jetson Orin NX / AGX Orin |
-| GUI | PySide6 + Qt/QML |
+| GUI | PySide6 Qt |
 | Voice | Piper TTS |
 | Database | SQLite |
 | Structured Logs | JSONL |
 | Video Encoding | H.264/H.265 |
 | Network Streaming | RTSP |
-| Containerization | Docker |
 | Operating System | Ubuntu / JetPack |
 
 ---
@@ -845,46 +803,33 @@ Real-World Testing
 # Installation & Setup
 
 ## 1. Clone the Repository
-
 ```bash
 git clone https://github.com/yourusername/astra.git
 cd astra
 ```
 
----
-
 ## 2. Create Virtual Environment
-
 ```bash
 python -m venv venv
 ```
 
 ### Windows
-
 ```bash
 venv\Scripts\activate
 ```
 
 ### Linux / macOS
-
 ```bash
 source venv/bin/activate
 ```
 
----
-
 ## 3. Install Python Dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ## 4. Install NVIDIA / Edge Dependencies
-
 For Jetson deployment, install the required:
-
 - JetPack
 - CUDA
 - TensorRT
@@ -892,49 +837,6 @@ For Jetson deployment, install the required:
 - GStreamer
 
 according to the target hardware environment.
-
----
-
-# Configuration
-
-Experiment workflows are configuration-driven.
-
-Example:
-
-```yaml
-experiment:
-  name: "Box Separation Experiment"
-
-steps:
-
-  - id: STEP_01
-    action: OPEN_CONTAINER
-    object: OUTER_BOX
-
-  - id: STEP_02
-    action: REMOVE
-    object: RED_BOX
-    source: OUTER_BOX
-
-  - id: STEP_03
-    action: REMOVE
-    object: YELLOW_BOX
-    source: OUTER_BOX
-
-  - id: STEP_04
-    action: PLACE
-    object: RED_BOX
-    target: TARGET_AREA
-
-  - id: STEP_05
-    action: PLACE
-    object: YELLOW_BOX
-    target: TARGET_AREA
-```
-
-The validation engine uses this configuration to maintain the expected experiment sequence.
-
----
 
 # Usage Guide
 
@@ -945,7 +847,6 @@ python app.py --camera 0
 ```
 
 ---
-
 ## Step 2 — Start Experiment
 
 Select the required experiment from the GUI.
@@ -1000,79 +901,6 @@ Experiment Video
 Experiment Event Log
 Experiment Summary
 Telemetry Record
-```
-
----
-
-# Project Structure
-
-```text
-ASTRA/
-│
-├── README.md
-├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
-│
-├── app.py
-├── config.yaml
-│
-├── configs/
-│   ├── experiment.yaml
-│   └── camera.yaml
-│
-├── models/
-│   ├── detector/
-│   ├── pose/
-│   ├── temporal/
-│   └── hmr/
-│
-├── training/
-│   ├── train_detector.py
-│   ├── train_temporal.py
-│   ├── dataset.yaml
-│   └── augmentation/
-│
-├── astra/
-│   ├── camera/
-│   ├── detection/
-│   ├── tracking/
-│   ├── pose/
-│   ├── hand_interaction/
-│   ├── hmr/
-│   ├── temporal/
-│   ├── outcome_verification/
-│   ├── experiment_engine/
-│   ├── confidence/
-│   ├── guidance/
-│   ├── telemetry/
-│   ├── communication/
-│   ├── logging/
-│   └── gui/
-│
-├── deployment/
-│   ├── tensorrt/
-│   ├── deepstream/
-│   └── jetson/
-│
-├── data/
-│   ├── raw/
-│   ├── processed/
-│   ├── annotations/
-│   ├── synthetic/
-│   └── experiments/
-│
-├── logs/
-├── recordings/
-├── telemetry/
-│
-└── tests/
-    ├── test_detection.py
-    ├── test_tracking.py
-    ├── test_temporal.py
-    ├── test_experiment_engine.py
-    ├── test_telemetry.py
-    └── test_fault_tolerance.py
 ```
 
 ---
@@ -1154,66 +982,6 @@ The most important system-level metrics are:
 - Memory usage
 - Power consumption
 
----
-
-# Performance Targets
-
-The prototype aims to achieve:
-
-```text
-Real-time local inference
-High experiment-step verification accuracy
-Low false-positive alert rate
-Reliable wrong-sequence detection
-Offline operation
-Stable video recording
-Low-overhead event telemetry
-```
-
-Final performance targets should be established through benchmarking on the selected Jetson hardware and actual experiment dataset.
-
----
-
-# Hardware Deployment
-
-## Development Setup
-
-Recommended development environment:
-
-```text
-PC / Laptop
-NVIDIA GPU
-USB / IP Camera
-Local Storage
-```
-
----
-
-## Edge Deployment
-
-Target hardware:
-
-```text
-NVIDIA Jetson Orin NX
-or
-NVIDIA Jetson AGX Orin
-```
-
-Deployment flow:
-
-```text
-PyTorch Model
-      ↓
-ONNX
-      ↓
-TensorRT FP16
-      ↓
-Jetson GPU
-      ↓
-DeepStream Pipeline
-      ↓
-Real-Time Inference
-```
 
 ---
 
@@ -1294,16 +1062,15 @@ Synchronize Events
 
 | Name | Role |
 |---|---|
-| Team Member 1 | AI / Computer Vision |
-| Team Member 2 | Backend / Edge AI |
-| Team Member 3 | Frontend / GUI |
-| Team Member 4 | AI / Dataset / Training |
-| Team Member 5 | Hardware / Networking / Integration |
+| Disha Adhikari | AI  |
+| Akshat Porwal | Backend / Edge AI |
+| Priya Singh | Experiment Pipeline Validation |
+| Mishita Joshi | AI Dataset Training |
+| Mansi Rai | GUI |
+| Geeriwar Aggarwal | UI |
 
 ---
 
 # License
 
-This project is developed as part of the **Smart India Hackathon (SIH)** and is intended for educational, research and prototype-development purposes.
-
-Copyright © ASTRA Team.
+This project is developed as part of the **Smart India Hackathon 2026** problem statement ID 2
