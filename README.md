@@ -122,3 +122,98 @@ Hand releases
 TEMPORAL MODEL
         ↓
 "REMOVE_RED_BOX"
+
+## Key Features — What Each Part Actually Does
+
+### 1. Object Detection
+**Answers:** “Where are the experiment objects?”
+
+Detects and tracks objects such as the outer box, red box, yellow box and tools.
+
+Example:
+`Red box detected → position tracked across frames`
+
+---
+
+### 2. Human Pose & 3D HMR
+**Answers:** “Where is the astronaut and how is the body oriented?”
+
+Pose estimation extracts body keypoints, while **3D Human Mesh Recovery (HMR)** estimates the astronaut's 3D body configuration.
+
+This is important because the astronaut may be rotated or working in arbitrary orientations in microgravity.
+
+---
+
+### 3. Hand–Object Interaction
+**Answers:** “Is the astronaut actually interacting with the object?”
+
+Combines hand landmarks with object positions.
+
+Example:
+`Hand approaches red box → contact → grip → object begins moving`
+
+This provides the evidence required to understand manipulation actions.
+
+---
+
+### 4. Temporal Activity Recognition
+**Answers:** “What action is the astronaut performing?”
+
+Analyzes several frames over time to recognize actions such as:
+
+`PICK → MOVE → PLACE → OPEN → REMOVE`
+
+---
+
+### 5. Physical Outcome Verification
+**Answers:** “Did the intended action actually complete the experiment step?”
+
+Compares the physical state before and after the action.
+
+Example:
+
+`Red box inside container → interaction → red box outside container → STEP VERIFIED`
+
+---
+
+### 6. Experiment Sequence Validation
+**Answers:** “Was the correct action performed at the correct stage?”
+
+The recognized action is compared with the expected experiment sequence.
+
+Possible outcomes:
+
+`CORRECT | SKIPPED | REPEATED | OUT-OF-SEQUENCE | UNCERTAIN`
+
+---
+
+### 7. Next-Step Guidance
+**Answers:** “What should the astronaut do next?”
+
+After a step is successfully verified:
+
+`STEP 2 COMPLETED → NEXT: Remove Yellow Box`
+
+The next action is shown on the GUI and can be spoken using offline TTS.
+
+---
+
+### 8. Deviation Detection & Voice Alerts
+**Answers:** “Is something going wrong?”
+
+Example:
+
+`Expected: Remove Red Box`
+`Observed: Remove Yellow Box`
+`→ Deviation detected`
+`→ Voice: "Please remove the red box first."`
+
+---
+
+### 9. Confidence-Aware Decision Making
+**Answers:** “How certain are we?”
+
+```text
+High confidence   → Accept step
+Medium confidence → Keep observing
+Low confidence    → Mark uncertain / do not advance
