@@ -1,6 +1,6 @@
 # ASTRA — Autonomous Experiment Verification & Guidance System
 
-**ASTRA (Autonomous Step Tracking, Reasoning & Assistance)** is an offline, edge-AI based onboard experiment monitoring and verification system system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations, and providing real-time guidance.
+**ASTRA** is an offline, edge-AI based onboard experiment monitoring and verification system system designed to assist astronauts during scientific experiments by continuously understanding human–object interactions, validating experiment procedures, detecting deviations, and providing real-time guidance.
 
 Built for the **AI Human Activity Recognition for On-board BAS Experiments** problem statement.
 
@@ -9,14 +9,12 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** pro
 ## Table of Contents
 
 2. Overview
-3. Proposed Solution
 4. Key Features
 6. System Architecture
 7. Tech Stack
 8. Methodology
 9. System Modules
-10. Experiment Workflow
-12. Dataset Generation
+12. Dataset Generation and Experiment Workflow
 13. Training Strategy
 14. Installation & Setup
 16. Usage Guide
@@ -226,95 +224,7 @@ The implementation follows the pipeline:
 
 ---
 
-# Experiment Workflow
-
-Example experiment:
-
-```text
-Outer Box
-   │
-   ├── Red Box
-   └── Yellow Box
-```
-
-Example procedure:
-
-```text
-STEP 1 → Open Outer Box
-STEP 2 → Remove Red Box
-STEP 3 → Remove Yellow Box
-STEP 4 → Place Red Box at Target
-STEP 5 → Place Yellow Box at Target
-STEP 6 → Complete Experiment
-```
-
-During execution:
-
-```text
-STEP 1 VERIFIED
-      ↓
-NEXT → REMOVE RED BOX
-      ↓
-RED BOX INTERACTION DETECTED
-      ↓
-PHYSICAL OUTCOME VERIFIED
-      ↓
-STEP 2 COMPLETED
-      ↓
-NEXT → REMOVE YELLOW BOX
-```
-
-If an incorrect step occurs:
-
-```text
-Expected → REMOVE RED BOX
-Observed → REMOVE YELLOW BOX
-      ↓
-OUT-OF-SEQUENCE
-      ↓
-Voice Alert
-      ↓
-Current State Remains Unchanged
-      ↓
-Astronaut Corrects Action
-      ↓
-STEP VERIFIED
-```
-
----
-
-# Edge & Space Networking
-
-ASTRA follows an **offline-first architecture**.
-
-Critical experiment intelligence remains onboard:
-
-```text
-Camera
-  ↓
-AI Inference
-  ↓
-Experiment Validation
-  ↓
-Voice Guidance
-  ↓
-Local Logging
-```
-
-Ground communication is treated as an additional communication layer rather than a dependency for experiment execution.
-
-## Event Prioritization
-
-```text
-Routine
-→ Step completion telemetry
-
-Warning
-→ Deviation / uncertain state
-
-Critical
-→ Priority event + relevant video/context
-```
+# 
 
 ## Communication Loss
 
@@ -333,112 +243,19 @@ LINK RESTORED
       ↓
 Synchronize Stored Events
 ```
+# Dataset Generation and Experiment Workflow
 
----
-
-# Dataset Generation
-
-The problem requires a custom focused dataset.
-
-ASTRA uses a combination of **real and synthetic data**.
-
-## Real Dataset
+We have trained the AI model based on our own recorded videos (synthetic dataset generation). ASTRA uses a combination of **real and synthetic data**. Synthetic data is primarily used to test for the specific experiment, while real data is used for realistic validation.
 
 Record experiment videos using:
 
-- Fixed camera positions
-- Multiple participants
 - Different body orientations
 - Different execution speeds
 - Different object positions
 - Different lighting conditions
-- Partial occlusion
 - Correct actions
 - Incorrect actions
 - Skipped actions
-- Repeated actions
-
----
-
-## Object Detection Dataset
-
-Annotate:
-
-- Experiment container
-- Red box
-- Yellow box
-- Tools
-- Other experiment-specific objects
-
-Annotations can be created in YOLO format.
-
----
-
-## Pose / Interaction Dataset
-
-Capture sequences containing:
-
-- Hand positions
-- Body keypoints
-- Object locations
-- Hand-object contact
-- Object movement
-- Action start/end
-
----
-
-## Synthetic Dataset
-
-Generate controlled synthetic variations for:
-
-- Orientation changes
-- Lighting variations
-- Object displacement
-- Astronaut pose variations
-- Camera viewpoint changes
-- Background variations
-- Occlusions
-
-Synthetic data is primarily used to improve perception robustness, while real data is used for realistic validation.
-
----
-
-# Training Strategy
-
-The training process is modular.
-
-```text
-Raw Videos
-     ↓
-Frame Extraction
-     ↓
-Object Annotation
-     ↓
-Pose / Interaction Labels
-     ↓
-YOLO Training
-     ↓
-Pose / Hand Integration
-     ↓
-Temporal Feature Generation
-     ↓
-TCN Training
-     ↓
-Experiment Validation
-     ↓
-Real-World Testing
-```
-
-## Training Priorities
-
-1. Object detection accuracy
-2. Hand-object interaction accuracy
-3. Temporal action recognition
-4. Correct experiment-state transitions
-5. Wrong/skip/repeated-step detection
-6. Edge inference latency
-
----
 
 # Installation & Setup
 
