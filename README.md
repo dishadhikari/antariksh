@@ -111,109 +111,1199 @@ It looks at a sequence of frames and identifies the action from motion over time
 
 Example:
 
+```text
 Hand approaches red box
         ↓
 Hand contacts red box
         ↓
-Red box moves
+Box moves
         ↓
-Hand releases
+Box changes location
         ↓
-TEMPORAL MODEL
-        ↓
-"REMOVE_RED_BOX"
+Interaction confirmed
+```
 
-## Key Features — What Each Part Actually Does
+This provides evidence that the astronaut is actually manipulating the required experiment object.
 
-### 1. Object Detection
-**Answers:** “Where are the experiment objects?”
+---
 
-Detects and tracks objects such as the outer box, red box, yellow box and tools.
+## 4. Temporal Activity Recognition
+
+The system analyzes multiple consecutive frames to understand actions over time rather than making decisions from a single frame.
 
 Example:
-`Red box detected → position tracked across frames`
-
----
-
-### 2. Human Pose & 3D HMR
-**Answers:** “Where is the astronaut and how is the body oriented?”
-
-Pose estimation extracts body keypoints, while **3D Human Mesh Recovery (HMR)** estimates the astronaut's 3D body configuration.
-
-This is important because the astronaut may be rotated or working in arbitrary orientations in microgravity.
-
----
-
-### 3. Hand–Object Interaction
-**Answers:** “Is the astronaut actually interacting with the object?”
-
-Combines hand landmarks with object positions.
-
-Example:
-`Hand approaches red box → contact → grip → object begins moving`
-
-This provides the evidence required to understand manipulation actions.
-
----
-
-### 4. Temporal Activity Recognition
-**Answers:** “What action is the astronaut performing?”
-
-Analyzes several frames over time to recognize actions such as:
-
-`PICK → MOVE → PLACE → OPEN → REMOVE`
-
----
-
-### 5. Physical Outcome Verification
-**Answers:** “Did the intended action actually complete the experiment step?”
-
-Compares the physical state before and after the action.
-
-Example:
-
-`Red box inside container → interaction → red box outside container → STEP VERIFIED`
-
----
-
-### 6. Experiment Sequence Validation
-**Answers:** “Was the correct action performed at the correct stage?”
-
-The recognized action is compared with the expected experiment sequence.
-
-Possible outcomes:
-
-`CORRECT | SKIPPED | REPEATED | OUT-OF-SEQUENCE | UNCERTAIN`
-
----
-
-### 7. Next-Step Guidance
-**Answers:** “What should the astronaut do next?”
-
-After a step is successfully verified:
-
-`STEP 2 COMPLETED → NEXT: Remove Yellow Box`
-
-The next action is shown on the GUI and can be spoken using offline TTS.
-
----
-
-### 8. Deviation Detection & Voice Alerts
-**Answers:** “Is something going wrong?”
-
-Example:
-
-`Expected: Remove Red Box`
-`Observed: Remove Yellow Box`
-`→ Deviation detected`
-`→ Voice: "Please remove the red box first."`
-
----
-
-### 9. Confidence-Aware Decision Making
-**Answers:** “How certain are we?”
 
 ```text
-High confidence   → Accept step
-Medium confidence → Keep observing
-Low confidence    → Mark uncertain / do not advance
+Approach
+   ↓
+Contact
+   ↓
+Grasp
+   ↓
+Move
+   ↓
+Release
+   ↓
+REMOVE_RED_BOX
+```
+
+Temporal activity recognition answers:
+
+> **What action is the astronaut performing?**
+
+---
+
+## 5. Physical Outcome Verification
+
+Physical outcome verification determines whether the recognized action actually completed the intended experiment step.
+
+Example:
+
+```text
+Before:
+Red box = inside container
+
+Astronaut interacts
+
+After:
+Red box = outside container
+        ↓
+Physical Outcome = VERIFIED
+```
+
+This prevents an attempted or incomplete action from being incorrectly treated as a completed experiment step.
+
+---
+
+## 6. Experiment Sequence Validation
+
+The system compares recognized actions with the predefined experiment sequence.
+
+Possible states include:
+
+```text
+CORRECT
+SKIPPED
+REPEATED
+OUT-OF-SEQUENCE
+UNKNOWN
+UNCERTAIN
+```
+
+---
+
+## 7. Next-Step Guidance
+
+After a step is successfully verified, ASTRA automatically identifies the next expected action and displays it through the GUI.
+
+Example:
+
+```text
+CURRENT STEP
+✓ Remove Red Box
+
+NEXT STEP
+→ Remove Yellow Box
+```
+
+---
+
+## 8. Deviation Detection & Voice Alerts
+
+If the astronaut performs an incorrect or out-of-sequence action, the system provides a voice-based alert.
+
+Example:
+
+> "Incorrect sequence. Please remove the red box first."
+
+The alert system operates locally without requiring cloud connectivity.
+
+---
+
+## 9. Confidence-Aware Decision Making
+
+ASTRA does not blindly accept low-confidence predictions.
+
+```text
+High Confidence
+→ Accept / Advance
+
+Medium Confidence
+→ Continue Observation
+
+Low Confidence
+→ Mark Uncertain
+→ Do Not Advance
+```
+
+This reduces false experiment-state transitions.
+
+---
+
+## 10. Unknown Action Detection
+
+Actions that do not correspond to known experiment activities are not forced into an existing class.
+
+Instead:
+
+```text
+Unknown Action
+     ↓
+No State Transition
+     ↓
+Continue Monitoring
+```
+
+This prevents unexpected movements from corrupting the experiment state.
+
+---
+
+## 11. Microgravity-Aware Spatial Understanding
+
+Instead of assuming a fixed floor or gravitational "down" direction, astronaut and object positions are represented relative to the **payload rack**.
+
+This allows spatial reasoning to remain meaningful even when the astronaut is rotated or working in non-Earth-like orientations.
+
+---
+
+## 12. Self-Calibrating Payload Reference
+
+Known rack geometry or visual reference markers can be used to establish the payload coordinate frame when the system starts.
+
+```text
+Detect Rack Reference
+        ↓
+Establish Coordinate Frame
+        ↓
+Track Astronaut + Objects
+Relative to Rack
+```
+
+This reduces dependence on manually defined image coordinates.
+
+---
+
+## 13. Predictive Deviation Warning
+
+ASTRA can analyze hand/object movement trajectories to identify a likely incorrect action before the action is fully completed.
+
+Example:
+
+```text
+Expected Object → Red Box
+
+Observed Hand Trajectory → Yellow Box
+
+        ↓
+
+Potential Deviation
+
+        ↓
+
+Early Voice Warning
+```
+
+This allows the system to prevent some procedural mistakes instead of detecting them only after completion.
+
+---
+
+## 14. Perception Health Monitoring
+
+The system monitors the quality of the visual pipeline for conditions such as:
+
+- Camera obstruction
+- Motion blur
+- Poor visibility
+- Object tracking loss
+- Pose tracking loss
+
+When perception becomes unreliable, the system marks the observation as **uncertain** instead of making an unreliable decision.
+
+---
+
+## 15. Graceful Degradation / Fault-Tolerant Perception
+
+If one perception component temporarily becomes unreliable, ASTRA can use other available evidence such as:
+
+- Object tracking
+- Hand-object geometry
+- Temporal motion
+- Previous verified state
+
+The aim is to degrade gracefully instead of completely failing the experiment.
+
+---
+
+## 16. Event-Based Lightweight Telemetry
+
+Rather than depending on continuous raw-video transmission, ASTRA converts experiment activity into compact structured events.
+
+Example:
+
+```text
+STEP_COMPLETED
+DEVIATION_DETECTED
+STEP_RECOVERED
+EXPERIMENT_COMPLETED
+```
+
+Each event can contain:
+
+- Timestamp
+- Step
+- Action
+- Confidence
+- Status
+- Relevant metadata
+
+---
+
+## 17. Delay/Disruption-Tolerant Experiment Reporting
+
+When communication with ground control is unavailable, experiment events are stored locally.
+
+```text
+Experiment Running
+       ↓
+Communication Lost
+       ↓
+Events Stored Locally
+       ↓
+Experiment Continues
+       ↓
+Communication Restored
+       ↓
+Stored Events Synchronized
+```
+
+The experiment-monitoring pipeline continues to operate independently of communication availability.
+
+---
+
+## 18. Bandwidth-Aware Data Prioritization
+
+Events are assigned different priorities according to mission relevance.
+
+```text
+Normal Event
+→ Lightweight telemetry
+
+Warning / Uncertain Event
+→ Higher-priority event
+
+Critical Deviation
+→ Event + relevant video/context
+```
+
+This reduces unnecessary communication load while retaining important mission information.
+
+---
+
+## 19. Local Video Recording & Network Streaming
+
+The system stores the experiment video locally while supporting real-time streaming to a specified IP address.
+
+Supported capabilities include:
+
+- Local recording
+- H.264/H.265 encoding
+- RTSP streaming
+- Timestamp synchronization with experiment events
+
+---
+
+## 20. Timestamped Experiment Logging
+
+All important experiment events are stored as structured records.
+
+Example:
+
+```json
+{
+  "timestamp": "2026-09-29T12:34:56.421",
+  "experiment": "BOX_SEPARATION",
+  "step": "STEP_02",
+  "action": "REMOVE_RED_BOX",
+  "confidence": 0.94,
+  "status": "COMPLETED"
+}
+```
+
+---
+
+# Innovation & Uniqueness
+
+## Microgravity-Aware Spatial Understanding
+
+Uses the payload rack as the spatial reference instead of assuming a fixed Earth-based up/down orientation.
+
+---
+
+## Orientation-Agnostic 3D Human Mesh Recovery
+
+Uses 3D human pose information to support astronaut activity recognition across arbitrary body orientations.
+
+---
+
+## Event-Based Lightweight Telemetry
+
+Converts continuous experiment activity into compact mission-relevant events instead of relying entirely on raw-video communication.
+
+---
+
+## Delay/Disruption-Tolerant Experiment Reporting
+
+Allows experiment monitoring to continue during communication loss and synchronizes stored information when connectivity returns.
+
+---
+
+## Graceful Degradation / Fault-Tolerant Perception
+
+Prevents temporary failures in individual perception components from immediately failing the complete experiment-monitoring system.
+
+---
+
+## Uncertainty-Driven Operation
+
+The system explicitly represents uncertain observations and avoids advancing the experiment state until sufficient evidence is available.
+
+---
+
+# System Architecture
+
+```text
+                    FIXED CAMERA
+                         │
+                         ▼
+              ┌────────────────────┐
+              │ GStreamer +         │
+              │ NVIDIA DeepStream   │
+              └─────────┬──────────┘
+                        │
+                        ▼
+              ┌────────────────────┐
+              │ PERCEPTION LAYER   │
+              │                    │
+              │ YOLO26 Detection   │
+              │ YOLO26 Pose        │
+              │ Hand Landmarks     │
+              │ 3D HMR             │
+              └─────────┬──────────┘
+                        │
+                        ▼
+              ┌────────────────────┐
+              │ TRACKING &         │
+              │ SPATIAL ANALYSIS   │
+              │                    │
+              │ Object Tracking    │
+              │ Hand/Object Links  │
+              │ Rack Coordinates   │
+              │ Motion Features    │
+              └─────────┬──────────┘
+                        │
+                        ▼
+              ┌────────────────────┐
+              │ TEMPORAL REASONING │
+              │                    │
+              │ TCN / Transformer  │
+              └─────────┬──────────┘
+                        │
+                        ▼
+              ┌────────────────────┐
+              │ OUTCOME            │
+              │ VERIFICATION       │
+              └─────────┬──────────┘
+                        │
+                        ▼
+              ┌────────────────────┐
+              │ EXPERIMENT         │
+              │ STATE VALIDATION   │
+              │                    │
+              │ FSM + Confidence   │
+              │ Logic              │
+              └─────────┬──────────┘
+                        │
+               ┌────────┼────────┐
+               ▼        ▼        ▼
+            CORRECT  DEVIATION  UNCERTAIN
+               │        │        │
+               ▼        ▼        ▼
+           Next Step  Voice     Observe
+           Guidance   Alert      More
+               │        │        │
+               └────────┼────────┘
+                        ▼
+              ┌────────────────────┐
+              │ OUTPUT & TELEMETRY │
+              │                    │
+              │ GUI                │
+              │ Voice              │
+              │ JSONL / SQLite     │
+              │ Local Video        │
+              │ RTSP Stream        │
+              │ Event Telemetry    │
+              └────────────────────┘
+```
+
+---
+
+# Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Programming | Python + C++ where required |
+| AI Training | PyTorch + Ultralytics |
+| Object Detection | YOLO26 |
+| Pose Estimation | YOLO26-Pose |
+| Segmentation | YOLO26-Seg where required |
+| 3D Human Understanding | 3D Human Mesh Recovery |
+| Hand Interaction | Hand landmarks + geometry |
+| Tracking | NVIDIA DeepStream Tracker / equivalent |
+| Temporal Model | TCN / lightweight Transformer |
+| Spatial Reasoning | Rack-centric coordinate system |
+| Video Pipeline | GStreamer + NVIDIA DeepStream |
+| Inference Optimization | ONNX + TensorRT FP16 |
+| Edge Hardware | NVIDIA Jetson Orin NX / AGX Orin |
+| GUI | PySide6 + Qt/QML |
+| Voice | Piper TTS |
+| Database | SQLite |
+| Structured Logs | JSONL |
+| Video Encoding | H.264/H.265 |
+| Network Streaming | RTSP |
+| Containerization | Docker |
+| Operating System | Ubuntu / JetPack |
+
+---
+
+# Methodology
+
+The implementation follows the pipeline:
+
+```text
+1. Capture
+      ↓
+2. Detect
+      ↓
+3. Track
+      ↓
+4. Estimate Pose / Hands / 3D Body
+      ↓
+5. Extract Spatial + Temporal Features
+      ↓
+6. Recognize Activity
+      ↓
+7. Verify Physical Outcome
+      ↓
+8. Validate Experiment Sequence
+      ↓
+9. Guide / Alert
+      ↓
+10. Log + Store + Transmit Events
+```
+
+---
+
+# System Modules
+
+| Module | Description |
+|---|---|
+| Camera Manager | Captures and manages local video streams |
+| Video Pipeline | Performs GPU-accelerated frame processing |
+| Object Detector | Detects experiment-specific objects |
+| Pose Estimator | Extracts astronaut body keypoints |
+| 3D HMR Module | Estimates 3D human configuration |
+| Hand Interaction Module | Detects hand-object interaction |
+| Object Tracker | Maintains object identity across frames |
+| Temporal Action Model | Recognizes action sequences |
+| Outcome Verifier | Confirms physical completion of actions |
+| Experiment Engine | Maintains the current experiment state |
+| Confidence Engine | Handles uncertain predictions |
+| Deviation Detector | Detects skipped/wrong/repeated actions |
+| Guidance Engine | Generates next-step instructions |
+| Voice Engine | Provides offline voice alerts |
+| Telemetry Engine | Generates lightweight mission events |
+| Communication Manager | Handles transmission and synchronization |
+| Logger | Stores timestamped experiment records |
+| GUI | Displays experiment, AI and system status |
+
+---
+
+# Experiment Workflow
+
+Example experiment:
+
+```text
+Outer Box
+   │
+   ├── Red Box
+   └── Yellow Box
+```
+
+Example procedure:
+
+```text
+STEP 1 → Open Outer Box
+STEP 2 → Remove Red Box
+STEP 3 → Remove Yellow Box
+STEP 4 → Place Red Box at Target
+STEP 5 → Place Yellow Box at Target
+STEP 6 → Complete Experiment
+```
+
+During execution:
+
+```text
+STEP 1 VERIFIED
+      ↓
+NEXT → REMOVE RED BOX
+      ↓
+RED BOX INTERACTION DETECTED
+      ↓
+PHYSICAL OUTCOME VERIFIED
+      ↓
+STEP 2 COMPLETED
+      ↓
+NEXT → REMOVE YELLOW BOX
+```
+
+If an incorrect step occurs:
+
+```text
+Expected → REMOVE RED BOX
+Observed → REMOVE YELLOW BOX
+      ↓
+OUT-OF-SEQUENCE
+      ↓
+Voice Alert
+      ↓
+Current State Remains Unchanged
+      ↓
+Astronaut Corrects Action
+      ↓
+STEP VERIFIED
+```
+
+---
+
+# Edge & Space Networking
+
+ASTRA follows an **offline-first architecture**.
+
+Critical experiment intelligence remains onboard:
+
+```text
+Camera
+  ↓
+AI Inference
+  ↓
+Experiment Validation
+  ↓
+Voice Guidance
+  ↓
+Local Logging
+```
+
+Ground communication is treated as an additional communication layer rather than a dependency for experiment execution.
+
+## Event Prioritization
+
+```text
+Routine
+→ Step completion telemetry
+
+Warning
+→ Deviation / uncertain state
+
+Critical
+→ Priority event + relevant video/context
+```
+
+## Communication Loss
+
+```text
+LINK AVAILABLE
+      ↓
+Transmit Events
+
+LINK LOST
+      ↓
+Store Events Locally
+      ↓
+Continue Experiment
+
+LINK RESTORED
+      ↓
+Synchronize Stored Events
+```
+
+---
+
+# Dataset Generation
+
+The problem requires a custom focused dataset.
+
+ASTRA uses a combination of **real and synthetic data**.
+
+## Real Dataset
+
+Record experiment videos using:
+
+- Fixed camera positions
+- Multiple participants
+- Different body orientations
+- Different execution speeds
+- Different object positions
+- Different lighting conditions
+- Partial occlusion
+- Correct actions
+- Incorrect actions
+- Skipped actions
+- Repeated actions
+
+---
+
+## Object Detection Dataset
+
+Annotate:
+
+- Experiment container
+- Red box
+- Yellow box
+- Tools
+- Other experiment-specific objects
+
+Annotations can be created in YOLO format.
+
+---
+
+## Pose / Interaction Dataset
+
+Capture sequences containing:
+
+- Hand positions
+- Body keypoints
+- Object locations
+- Hand-object contact
+- Object movement
+- Action start/end
+
+---
+
+## Synthetic Dataset
+
+Generate controlled synthetic variations for:
+
+- Orientation changes
+- Lighting variations
+- Object displacement
+- Astronaut pose variations
+- Camera viewpoint changes
+- Background variations
+- Occlusions
+
+Synthetic data is primarily used to improve perception robustness, while real data is used for realistic validation.
+
+---
+
+# Training Strategy
+
+The training process is modular.
+
+```text
+Raw Videos
+     ↓
+Frame Extraction
+     ↓
+Object Annotation
+     ↓
+Pose / Interaction Labels
+     ↓
+YOLO Training
+     ↓
+Pose / Hand Integration
+     ↓
+Temporal Feature Generation
+     ↓
+TCN Training
+     ↓
+Experiment Validation
+     ↓
+Real-World Testing
+```
+
+## Training Priorities
+
+1. Object detection accuracy
+2. Hand-object interaction accuracy
+3. Temporal action recognition
+4. Correct experiment-state transitions
+5. Wrong/skip/repeated-step detection
+6. Edge inference latency
+
+---
+
+# Installation & Setup
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/astra.git
+cd astra
+```
+
+---
+
+## 2. Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+## 3. Install Python Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 4. Install NVIDIA / Edge Dependencies
+
+For Jetson deployment, install the required:
+
+- JetPack
+- CUDA
+- TensorRT
+- NVIDIA DeepStream
+- GStreamer
+
+according to the target hardware environment.
+
+---
+
+# Configuration
+
+Experiment workflows are configuration-driven.
+
+Example:
+
+```yaml
+experiment:
+  name: "Box Separation Experiment"
+
+steps:
+
+  - id: STEP_01
+    action: OPEN_CONTAINER
+    object: OUTER_BOX
+
+  - id: STEP_02
+    action: REMOVE
+    object: RED_BOX
+    source: OUTER_BOX
+
+  - id: STEP_03
+    action: REMOVE
+    object: YELLOW_BOX
+    source: OUTER_BOX
+
+  - id: STEP_04
+    action: PLACE
+    object: RED_BOX
+    target: TARGET_AREA
+
+  - id: STEP_05
+    action: PLACE
+    object: YELLOW_BOX
+    target: TARGET_AREA
+```
+
+The validation engine uses this configuration to maintain the expected experiment sequence.
+
+---
+
+# Usage Guide
+
+## Step 1 — Start Camera
+
+```bash
+python app.py --camera 0
+```
+
+---
+
+## Step 2 — Start Experiment
+
+Select the required experiment from the GUI.
+
+The system initializes:
+
+- Camera
+- Object detector
+- Pose model
+- Hand tracking
+- 3D HMR
+- Experiment state
+- Logger
+- Video recorder
+
+---
+
+## Step 3 — Perform Experiment
+
+The system continuously:
+
+- Detects objects
+- Tracks the astronaut
+- Recognizes actions
+- Verifies physical outcomes
+- Validates experiment sequence
+
+---
+
+## Step 4 — Receive Guidance
+
+The GUI displays:
+
+```text
+CURRENT STEP
+NEXT STEP
+CONFIDENCE
+SYSTEM STATUS
+EXPERIMENT STATUS
+```
+
+Voice alerts are generated for confirmed deviations.
+
+---
+
+## Step 5 — Complete Experiment
+
+At completion, ASTRA generates:
+
+```text
+Experiment Video
+Experiment Event Log
+Experiment Summary
+Telemetry Record
+```
+
+---
+
+# Project Structure
+
+```text
+ASTRA/
+│
+├── README.md
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+│
+├── app.py
+├── config.yaml
+│
+├── configs/
+│   ├── experiment.yaml
+│   └── camera.yaml
+│
+├── models/
+│   ├── detector/
+│   ├── pose/
+│   ├── temporal/
+│   └── hmr/
+│
+├── training/
+│   ├── train_detector.py
+│   ├── train_temporal.py
+│   ├── dataset.yaml
+│   └── augmentation/
+│
+├── astra/
+│   ├── camera/
+│   ├── detection/
+│   ├── tracking/
+│   ├── pose/
+│   ├── hand_interaction/
+│   ├── hmr/
+│   ├── temporal/
+│   ├── outcome_verification/
+│   ├── experiment_engine/
+│   ├── confidence/
+│   ├── guidance/
+│   ├── telemetry/
+│   ├── communication/
+│   ├── logging/
+│   └── gui/
+│
+├── deployment/
+│   ├── tensorrt/
+│   ├── deepstream/
+│   └── jetson/
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   ├── annotations/
+│   ├── synthetic/
+│   └── experiments/
+│
+├── logs/
+├── recordings/
+├── telemetry/
+│
+└── tests/
+    ├── test_detection.py
+    ├── test_tracking.py
+    ├── test_temporal.py
+    ├── test_experiment_engine.py
+    ├── test_telemetry.py
+    └── test_fault_tolerance.py
+```
+
+---
+
+# Output & Logging
+
+## Experiment Event Log
+
+ASTRA stores lightweight event records using JSONL.
+
+Example:
+
+```json
+{
+  "timestamp": "2026-09-29T12:34:56.421",
+  "experiment": "BOX_SEPARATION",
+  "step": "STEP_02",
+  "action": "REMOVE_RED_BOX",
+  "confidence": 0.94,
+  "status": "COMPLETED"
+}
+```
+
+---
+
+## Deviation Event
+
+```json
+{
+  "timestamp": "2026-09-29T12:36:04.217",
+  "experiment": "BOX_SEPARATION",
+  "expected_step": "STEP_02",
+  "observed_action": "REMOVE_YELLOW_BOX",
+  "confidence": 0.91,
+  "status": "OUT_OF_SEQUENCE"
+}
+```
+
+---
+
+# Testing & Evaluation
+
+The system should be evaluated at both **AI level and complete-system level**.
+
+## Computer Vision Metrics
+
+- Precision
+- Recall
+- mAP
+- Pose accuracy
+- Tracking accuracy
+
+## Activity Recognition Metrics
+
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion matrix
+
+## Experiment Validation Metrics
+
+The most important system-level metrics are:
+
+- Correct step verification rate
+- False step completion rate
+- Wrong-sequence detection rate
+- Skipped-step detection rate
+- Repeated-step detection rate
+- Unknown-action rejection rate
+- Recovery success rate
+
+## Edge Metrics
+
+- FPS
+- End-to-end latency
+- GPU utilization
+- CPU utilization
+- Memory usage
+- Power consumption
+
+---
+
+# Performance Targets
+
+The prototype aims to achieve:
+
+```text
+Real-time local inference
+High experiment-step verification accuracy
+Low false-positive alert rate
+Reliable wrong-sequence detection
+Offline operation
+Stable video recording
+Low-overhead event telemetry
+```
+
+Final performance targets should be established through benchmarking on the selected Jetson hardware and actual experiment dataset.
+
+---
+
+# Hardware Deployment
+
+## Development Setup
+
+Recommended development environment:
+
+```text
+PC / Laptop
+NVIDIA GPU
+USB / IP Camera
+Local Storage
+```
+
+---
+
+## Edge Deployment
+
+Target hardware:
+
+```text
+NVIDIA Jetson Orin NX
+or
+NVIDIA Jetson AGX Orin
+```
+
+Deployment flow:
+
+```text
+PyTorch Model
+      ↓
+ONNX
+      ↓
+TensorRT FP16
+      ↓
+Jetson GPU
+      ↓
+DeepStream Pipeline
+      ↓
+Real-Time Inference
+```
+
+---
+
+# System Modes
+
+## Normal Mode
+
+```text
+Detect → Recognize → Verify → Advance
+```
+
+---
+
+## Uncertain Mode
+
+```text
+Ambiguous Evidence
+      ↓
+Continue Observation
+      ↓
+Additional Evidence
+      ↓
+Verify / Remain Uncertain
+```
+
+---
+
+## Deviation Mode
+
+```text
+Wrong Action
+      ↓
+Deviation Confirmed
+      ↓
+Voice Alert
+      ↓
+State Does Not Advance
+      ↓
+Astronaut Corrects Action
+```
+
+---
+
+## Communication Loss Mode
+
+```text
+Communication Lost
+      ↓
+Continue Full Onboard Operation
+      ↓
+Store Events Locally
+      ↓
+Communication Restored
+      ↓
+Synchronize Events
+```
+
+---
+
+# Future Improvements
+
+- Multi-camera perception
+- Improved 3D human mesh recovery
+- More robust orientation-agnostic activity recognition
+- Hardware-aware adaptive inference
+- Advanced uncertainty estimation
+- Additional experiment templates
+- More sophisticated anomaly detection
+- Autonomous experiment recovery
+- Ground-control dashboard
+- DTN-compatible communication layer
+- Radiation-tolerant deployment hardware
+- Integration with spacecraft payload interfaces
+
+---
+
+# Team
+
+| Name | Role |
+|---|---|
+| Team Member 1 | AI / Computer Vision |
+| Team Member 2 | Backend / Edge AI |
+| Team Member 3 | Frontend / GUI |
+| Team Member 4 | AI / Dataset / Training |
+| Team Member 5 | Hardware / Networking / Integration |
+
+---
+
+# License
+
+This project is developed as part of the **Smart India Hackathon (SIH)** and is intended for educational, research and prototype-development purposes.
+
+Copyright © ASTRA Team.
