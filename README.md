@@ -23,23 +23,66 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH
 13. Hardware Deployment
 14. Team
 15. License
-
----
-
-# Overview
-
- Instead of only recognizing human activities, VYOMA understands:
-
-
+    
 # Key Features
 
+## Key Features
+
 ### 1. Temporal Activity & Interaction Recognition
-Understands actions from sequences of frames by combining astronaut pose, hand landmarks, object tracking and hand–object interaction.
+Recognizes astronaut activities from sequences of video frames using object detection, pose estimation, hand landmarks, tracking, and hand–object interaction analysis.
+
+### 2. Physical Outcome Verification
+Verifies whether the intended physical change actually occurred. An action is considered complete only when the corresponding change in the experiment state is confirmed.
 
 ```text
-Approach → Contact → Grasp → Move → Release
-                         ↓
-                  REMOVE_RED_BOX
+Before: Red Box → Inside Container
+Action: Grasp → Move → Release
+After:  Red Box → Outside Container
+                    ↓
+              STEP VERIFIED
+```
+
+### 3. State-Aware Experiment Validation
+Uses a deterministic Finite State Machine (FSM) to compare observed actions and physical outcomes with the predefined experiment sequence.
+
+```text
+CORRECT | SKIPPED | REPEATED | OUT-OF-SEQUENCE
+UNKNOWN | UNCERTAIN
+```
+
+The experiment state advances only when sufficient evidence confirms the current step.
+
+### 4. Confidence-Aware Guidance & Deviation Prevention
+Combines perception confidence, temporal evidence, and experiment state to decide whether to advance, continue observing, or issue an alert.
+
+```text
+High Confidence   → Verify & Advance
+Medium Confidence → Continue Observing
+Low Confidence    → Uncertain / No State Change
+```
+
+Potentially incorrect actions can trigger an early local voice warning.
+
+### 5. Microgravity-Aware Spatial Understanding
+Uses the payload rack as the primary spatial reference instead of assuming a fixed gravitational up/down direction. This enables reliable interpretation of astronaut and object positions under arbitrary orientations.
+
+### 6. Fault-Tolerant Perception
+Handles occlusion, motion blur, poor visibility, and temporary tracking loss. When one perception signal becomes unreliable, ASTRA uses complementary evidence from other modules and avoids unreliable state transitions.
+
+### 7. Event-Based & Delay-Tolerant Telemetry
+Converts experiment activity into compact, timestamped events instead of relying on continuous raw-video transmission.
+
+```text
+STEP_COMPLETED
+DEVIATION_DETECTED
+STEP_RECOVERED
+EXPERIMENT_COMPLETED
+```
+
+Events are stored locally during communication loss and synchronized when connectivity is restored, reducing bandwidth requirements and preserving mission records.
+
+### 8. Local Mission Recording & Monitoring
+Provides complete onboard monitoring through structured event logs, local H.264/H.265 video recording, RTSP streaming, GUI visualization, and offline voice alerts. The core experiment-monitoring pipeline operates independently of continuous ground connectivity.
 # System Architecture
 
 ```text
