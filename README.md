@@ -12,24 +12,19 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** pro
 2. Problem Statement
 3. Proposed Solution
 4. Key Features
-5. Innovation & Uniqueness
 6. System Architecture
 7. Tech Stack
 8. Methodology
 9. System Modules
 10. Experiment Workflow
-11. Edge & Space Networking
 12. Dataset Generation
 13. Training Strategy
 14. Installation & Setup
-15. Configuration
 16. Usage Guide
 17. Project Structure
 18. Output & Logging
 19. Testing & Evaluation
 20. Hardware Deployment
-21. Performance Targets
-22. Future Improvements
 23. Team
 24. License
 
