@@ -111,7 +111,6 @@ It looks at a sequence of frames and identifies the action from motion over time
 
 Example:
 
-```text
 Hand approaches red box
         ↓
 Hand contacts red box
