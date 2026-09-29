@@ -934,22 +934,9 @@ Example:
 }
 ```
 
----
-
 # Testing & Evaluation
 
-The system should be evaluated at both **AI level and complete-system level**.
-
-## Computer Vision Metrics
-
-- Precision
-- Recall
-- mAP
-- Pose accuracy
-- Tracking accuracy
-
 ## Activity Recognition Metrics
-
 - Accuracy
 - Precision
 - Recall
@@ -957,9 +944,6 @@ The system should be evaluated at both **AI level and complete-system level**.
 - Confusion matrix
 
 ## Experiment Validation Metrics
-
-The most important system-level metrics are:
-
 - Correct step verification rate
 - False step completion rate
 - Wrong-sequence detection rate
@@ -977,9 +961,6 @@ The most important system-level metrics are:
 - Memory usage
 - Power consumption
 
-
----
-
 # System Modes
 
 ## Normal Mode
@@ -987,8 +968,6 @@ The most important system-level metrics are:
 ```text
 Detect → Recognize → Verify → Advance
 ```
-
----
 
 ## Uncertain Mode
 
@@ -1001,8 +980,6 @@ Additional Evidence
       ↓
 Verify / Remain Uncertain
 ```
-
----
 
 ## Deviation Mode
 
@@ -1017,8 +994,6 @@ State Does Not Advance
       ↓
 Astronaut Corrects Action
 ```
-
----
 
 ## Communication Loss Mode
 
@@ -1035,7 +1010,6 @@ Synchronize Events
 ```
 
 # Future Improvements
-
 - Multi-camera perception
 - Improved 3D human mesh recovery
 - More robust orientation-agnostic activity recognition
