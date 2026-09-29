@@ -19,8 +19,6 @@ Built for the **AI Human Activity Recognition for On-board BAS Experiments** SIH
 14. Team
 15. License
     
-#Key Features
-
 ## Key Features
 
 ### 1. Edge-Native Offline AI Experiment Evaluation
@@ -132,7 +130,7 @@ Provides complete onboard monitoring through structured event logs, local H.264/
 | Segmentation | YOLO26-Seg  |
 | 3D Human Understanding | 3D Human Mesh Recovery |
 | Tracking | NVIDIA DeepStream Tracker  |
-| Temporal Model | TCN / lightweight Transformer |
+| Temporal Model | TCN  |
 | Spatial Reasoning | Rack-centric coordinate system |
 | Video Pipeline | GStreamer + NVIDIA DeepStream |
 | Inference Optimization | ONNX + TensorRT FP16 |
@@ -143,7 +141,6 @@ Provides complete onboard monitoring through structured event logs, local H.264/
 | Structured Logs | JSONL |
 | Video Encoding | H.264/H.265 |
 | Network Streaming | RTSP |
-| Operating System | Ubuntu / JetPack |
 
 # System Modules
 
@@ -186,7 +183,7 @@ Recorded experiment videos using:
 
 ## 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/VYOMA.git
+git clone https://github.com/dishadhikari/antariksh.git
 cd VYOMA
 ```
 
@@ -222,19 +219,6 @@ Example:
   "action": "REMOVE_RED_BOX",
   "confidence": 0.94,
   "status": "COMPLETED"
-}
-```
-
-## Deviation Event
-
-```json
-{
-  "timestamp": "2026-09-29T12:36:04.217",
-  "experiment": "BOX_SEPARATION",
-  "expected_step": "STEP_02",
-  "observed_action": "REMOVE_YELLOW_BOX",
-  "confidence": 0.91,
-  "status": "OUT_OF_SEQUENCE"
 }
 ```
 
