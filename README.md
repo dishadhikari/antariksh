@@ -98,3 +98,28 @@ PLACE_YELLOW_BOX
 OPEN_CONTAINER
 PICK_TOOL
 PLACE_TOOL
+# Temporal Activity Recognition vs Physical Outcome Verification
+
+They are **not the same thing**.
+
+### Temporal Activity Recognition
+Answers:
+
+> **“What action is the astronaut performing?”**
+
+It looks at a sequence of frames and identifies the action from motion over time.
+
+Example:
+
+```text
+Hand approaches red box
+        ↓
+Hand contacts red box
+        ↓
+Red box moves
+        ↓
+Hand releases
+        ↓
+TEMPORAL MODEL
+        ↓
+"REMOVE_RED_BOX"
